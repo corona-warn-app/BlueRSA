@@ -265,13 +265,13 @@ public extension CryptorRSA {
 			throw Error(code: ERR_STRIP_PK_HEADER, reason: "Provided key doesn't have a valid X509 header")
 		}
 		
-		index += 15
+        index += Int(byteArray[index + 1]) + 2
 		if byteArray[index] != 0x03 {
 			
 			throw Error(code: ERR_STRIP_PK_HEADER, reason: "Invalid byte at index \(index - 1) (\(byteArray[index - 1])) for public key header")
 		}
 		
-		index += Int(byteArray[index + 1]) + 2
+		index += 1
 		if byteArray[index] > 0x80 {
 			index += Int(byteArray[index]) - 0x80 + 1
 		} else {
